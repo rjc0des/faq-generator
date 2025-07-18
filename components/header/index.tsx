@@ -9,7 +9,7 @@ function Header() {
 	const navigate = useRouter();
 	const [isMobileMenuOpen, setIsMobileMenuOpen] = React.useState(false);
 	return (
-		<nav className="border-b border-slate-700/50 bg-slate-900/50 backdrop-blur-sm fixed top-0 w-full">
+		<nav className="border-b border-slate-700/50 bg-slate-900/50 backdrop-blur-sm fixed top-0 w-full z-50">
 			<div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 				<div className="flex items-center justify-between h-16">
 					<div className="flex items-center space-x-3">
@@ -36,7 +36,7 @@ function Header() {
 						<Button
 							variant="ghost"
 							onClick={() => navigate.push("/pricing")}
-							className="text-slate-300 hover:text-white"
+							className="text-slate-300 hover:text-white hover:bg-transparent"
 						>
 							Pricing
 						</Button>
