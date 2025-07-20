@@ -1,8 +1,9 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
-import Header from "@/components/header";
-import Footer from "@/components/footer";
+import { Toaster as Sonnar } from "@/components/ui/sonner";
+import { Toaster } from "@/components/ui/toaster";
+import { QueryProvider } from "@/components/provider/QueryProvider";
 
 const defaultUrl = process.env.VERCEL_URL
 	? `https://${process.env.VERCEL_URL}`
@@ -27,11 +28,13 @@ export default function RootLayout({
 }>) {
 	return (
 		<html lang="en" suppressHydrationWarning>
-			<body className={`${geistSans.className} antialiased`}>
-				<Header />
-				{children}
-				<Footer />
-			</body>
+			<QueryProvider>
+				<body className={`${geistSans.className} antialiased`}>
+					<Sonnar />
+					<Toaster />
+					{children}
+				</body>
+			</QueryProvider>
 		</html>
 	);
 }

@@ -8,7 +8,7 @@ export function createClient() {
 		{
 			auth: {
 				autoRefreshToken: true,
-				storage: localStorage,
+				// storage: localStorage,
 				persistSession: true,
 			},
 		}

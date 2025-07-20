@@ -45,19 +45,36 @@ export async function updateSession(request: NextRequest) {
 		data: { user },
 	} = await supabase.auth.getUser();
 
-	const unsecuredPathname = ["/", "/pricing"];
+	const protectedRoutes = ["/dashboard", "/billing"];
 
-	if (
-		!unsecuredPathname.includes(request.nextUrl.pathname) &&
-		!user &&
-		!request.nextUrl.pathname.startsWith("/login") &&
-		!request.nextUrl.pathname.startsWith("/auth")
-	) {
-		// no user, potentially respond by redirecting the user to the login page
-		const url = request.nextUrl.clone();
-		url.pathname = "/auth/login";
-		return NextResponse.redirect(url);
+	// ✅ Auth-only pages — redirect logged-in users away
+	const authOnlyRoutes = ["/auth"];
+
+	// 👮‍♂️ Redirect unauthenticated users trying to access protected routes
+	if (protectedRoutes.includes(request.nextUrl.pathname) && !user) {
+		return NextResponse.redirect(new URL("/auth", request.url));
 	}
+
+	// 🚫 Redirect logged-in users away from /auth pages
+	if (
+		authOnlyRoutes.some((path) =>
+			request.nextUrl.pathname.startsWith(path)
+		) &&
+		user
+	) {
+		return NextResponse.redirect(new URL("/dashboard", request.url));
+	}
+	// if (
+	// 	!unsecuredPathname.includes(request.nextUrl.pathname) &&
+	// 	!user &&
+	// 	request.nextUrl.pathname != "/auth"
+	// ) {
+	// 	console.log("hello");
+	// 	// no user, potentially respond by redirecting the user to the login page
+	// 	const url = request.nextUrl.clone();
+	// 	url.pathname = "/auth";
+	// 	return NextResponse.redirect(url);
+	// }
 
 	// IMPORTANT: You *must* return the supabaseResponse object as it is.
 	// If you're creating a new response object with NextResponse.next() make sure to:

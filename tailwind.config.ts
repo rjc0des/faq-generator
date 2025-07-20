@@ -6,9 +6,11 @@ export default {
 		"./pages/**/*.{ts,tsx}",
 		"./components/**/*.{ts,tsx}",
 		"./module/**/*.{ts,tsx}",
+		"./hooks/**/*.{ts,tsx}",
 		"./app/**/*.{ts,tsx}",
 		"./src/**/*.{ts,tsx}",
 	],
+	safelist: ["bg-lavender-600", "text-white"],
 	prefix: "",
 	theme: {
 		container: {

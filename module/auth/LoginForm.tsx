@@ -21,24 +21,28 @@ const LoginForm = ({ onToggleMode }: LoginFormProps) => {
 	const handleLogin = async (e: React.FormEvent) => {
 		e.preventDefault();
 		debugger;
-		setIsLoading(true);
+		// setIsLoading(true);
 
-		try {
-			const { error } = await supabase.auth.signInWithPassword({
-				email,
-				password,
-			});
+		console.log(await supabase.auth.getUser());
+		toast.error("Hello", { duration: 50000 });
+		return;
 
-			if (error) {
-				toast.error(error.message);
-			} else {
-				toast.success("Successfully signed in!");
-			}
-		} catch (error) {
-			toast.error("An unexpected error occurred");
-		} finally {
-			setIsLoading(false);
-		}
+		// try {
+		// 	const { error } = await supabase.auth.signInWithPassword({
+		// 		email,
+		// 		password,
+		// 	});
+
+		// 	if (error) {
+		// 		toast.error(error.message);
+		// 	} else {
+		// 		toast.success("Successfully signed in!");
+		// 	}
+		// } catch (error) {
+		// 	toast.error("An unexpected error occurred");
+		// } finally {
+		// 	setIsLoading(false);
+		// }
 	};
 
 	return (
