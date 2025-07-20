@@ -6,7 +6,7 @@ import { cn } from "@/lib/utils";
 import React, { forwardRef } from "react";
 
 type Props = LinkProps & {
-	activeClassName: string;
+	activeClassName?: string;
 	exact?: boolean;
 	children: React.ReactNode;
 	className?: string;

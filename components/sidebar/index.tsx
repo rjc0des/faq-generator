@@ -22,6 +22,8 @@ import {
 	ListChecks,
 } from "lucide-react";
 import NavLink from "../nav-link";
+import { usePathname } from "next/navigation";
+import { cn } from "@/lib/utils";
 
 const menuItems = [
 	{
@@ -54,6 +56,7 @@ const menuItems = [
 const NavSidebar = () => {
 	const { state } = useSidebar();
 	const isCollapsed = state === "collapsed";
+	const pathname = usePathname();
 
 	return (
 		<Sidebar className="bg-slate-900 border-r border-slate-800">
@@ -81,12 +84,19 @@ const NavSidebar = () => {
 						<SidebarMenu>
 							{menuItems.map((item) => (
 								<SidebarMenuItem key={item.title}>
-									<SidebarMenuButton asChild>
+									<SidebarMenuButton
+										asChild
+										isActive={pathname === item.url}
+									>
 										<NavLink
 											href={item.url}
 											exact
-											className={`flex items-center gap-3 px-3 py-2 rounded-lg transition-colors text-slate-300 hover:bg-slate-800 hover:text-white`}
-											activeClassName="bg-lavender-600 text-white"
+											className={cn(
+												`flex items-center gap-3 px-3 py-2 rounded-lg transition-colors text-slate-300 hover:bg-slate-800 hover:text-white`,
+												pathname === item.url
+													? "!bg-lavender-600 !text-white"
+													: ""
+											)}
 										>
 											<item.icon className="h-5 w-5" />
 											{!isCollapsed && (
