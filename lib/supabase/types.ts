@@ -12,6 +12,31 @@ export type Database = {
 	__InternalSupabase: {
 		PostgrestVersion: "12.2.3 (519615d)";
 	};
+	graphql_public: {
+		Tables: {
+			[_ in never]: never;
+		};
+		Views: {
+			[_ in never]: never;
+		};
+		Functions: {
+			graphql: {
+				Args: {
+					operationName?: string;
+					query?: string;
+					variables?: Json;
+					extensions?: Json;
+				};
+				Returns: Json;
+			};
+		};
+		Enums: {
+			[_ in never]: never;
+		};
+		CompositeTypes: {
+			[_ in never]: never;
+		};
+	};
 	public: {
 		Tables: {
 			faq_generations: {
@@ -139,9 +164,11 @@ export type Database = {
 					id: string;
 					lemon_squeezy_customer_id: string | null;
 					lemon_squeezy_subscription_id: string | null;
-					plan_name: string | null;
+					plan_name:
+						| Database["public"]["Enums"]["plan_name_enum"]
+						| null;
 					plan_price: number | null;
-					status: string;
+					status: Database["public"]["Enums"]["subscription_status"];
 					trial_end: string | null;
 					updated_at: string;
 					user_id: string;
@@ -154,9 +181,11 @@ export type Database = {
 					id?: string;
 					lemon_squeezy_customer_id?: string | null;
 					lemon_squeezy_subscription_id?: string | null;
-					plan_name?: string | null;
+					plan_name?:
+						| Database["public"]["Enums"]["plan_name_enum"]
+						| null;
 					plan_price?: number | null;
-					status?: string;
+					status?: Database["public"]["Enums"]["subscription_status"];
 					trial_end?: string | null;
 					updated_at?: string;
 					user_id: string;
@@ -169,9 +198,11 @@ export type Database = {
 					id?: string;
 					lemon_squeezy_customer_id?: string | null;
 					lemon_squeezy_subscription_id?: string | null;
-					plan_name?: string | null;
+					plan_name?:
+						| Database["public"]["Enums"]["plan_name_enum"]
+						| null;
 					plan_price?: number | null;
-					status?: string;
+					status?: Database["public"]["Enums"]["subscription_status"];
 					trial_end?: string | null;
 					updated_at?: string;
 					user_id?: string;
@@ -196,7 +227,13 @@ export type Database = {
 			};
 		};
 		Enums: {
-			[_ in never]: never;
+			plan_name_enum: "monthly" | "free";
+			subscription_status:
+				| "pending"
+				| "active"
+				| "past_due"
+				| "canceled"
+				| "expired";
 		};
 		CompositeTypes: {
 			[_ in never]: never;
@@ -325,7 +362,19 @@ export type CompositeTypes<
 	: never;
 
 export const Constants = {
-	public: {
+	graphql_public: {
 		Enums: {},
+	},
+	public: {
+		Enums: {
+			plan_name_enum: ["monthly", "free"],
+			subscription_status: [
+				"pending",
+				"active",
+				"past_due",
+				"canceled",
+				"expired",
+			],
+		},
 	},
 } as const;
