@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 export default async function NotFound() {
 	return (
 		<div className="min-h-screen flex items-center justify-center bg-gray-100">
@@ -6,12 +8,12 @@ export default async function NotFound() {
 				<p className="text-xl text-gray-600 mb-4">
 					Oops! Page not found
 				</p>
-				<a
+				<Link
 					href="/"
 					className="text-blue-500 hover:text-blue-700 underline"
 				>
 					Return to Home
-				</a>
+				</Link>
 			</div>
 		</div>
 	);
