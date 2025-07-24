@@ -124,5 +124,3 @@ Make product pages more informative, AI-enhanced, and SEO-friendly — automatic
 [LinkedIn](https://linkedin.com/in/rohithjayaraj)  
 [Portfolio](https://rohith-jayaraj.vercel.app)  
 [Email](mailto:rohithjayaraj90@gmail.com)
-
----

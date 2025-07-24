@@ -1,13 +1,13 @@
 "use client";
 
 import React from "react";
-import Banner from "@/module/home/Banner";
-import Stats from "@/module/home/Stats";
-import Features from "@/module/home/Features";
-import HowItWorks from "@/module/home/HowItWorks";
-import Testimonial from "@/module/home/Testimonial";
-import CTA from "@/module/home/CTA";
-import Contact from "@/module/home/Contact";
+import Banner from "./Banner";
+import Stats from "./Stats";
+import Features from "./Features";
+import HowItWorks from "./HowItWorks";
+import Testimonial from "./Testimonial";
+import CTA from "./CTA";
+import Contact from "./Contact";
 
 const LandingPage = () => {
 	return (
