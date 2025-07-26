@@ -17,28 +17,24 @@ export async function getCheckoutURL(embed = false) {
 		throw new Error("User is not authenticated.");
 	}
 
-	const checkout = await createCheckout(
-		process.env.LEMONSQUEEZY_STORE_ID!,
-		583382,
-		{
-			checkoutOptions: {
-				embed,
-				media: false,
-				logo: !embed,
+	const checkout = await createCheckout(201390, 909769, {
+		checkoutOptions: {
+			embed,
+			media: false,
+			logo: !embed,
+		},
+		checkoutData: {
+			email: user.email ?? undefined,
+			custom: {
+				user_id: user.id,
 			},
-			checkoutData: {
-				email: user.email ?? undefined,
-				custom: {
-					user_id: user.id,
-				},
-			},
-			productOptions: {
-				redirectUrl: `${process.env.NEXT_PUBLIC_APP_URL}/dashboard`,
-				receiptButtonText: "Go to Dashboard",
-				receiptThankYouNote: "Thank you for signing up",
-			},
-		}
-	);
+		},
+		productOptions: {
+			redirectUrl: `${process.env.NEXT_PUBLIC_APP_URL}/dashboard`,
+			receiptButtonText: "Go to Dashboard",
+			receiptThankYouNote: "Thank you for signing up",
+		},
+	});
 
 	return checkout.data?.data.attributes.url;
 }

@@ -2,7 +2,6 @@
 
 import { useState, useEffect } from "react";
 import { createClient } from "@/lib/supabase/client";
-import { useToast } from "@/hooks/use-toast";
 
 interface Subscription {
 	id: string;
@@ -74,6 +73,8 @@ export const useSubscription = () => {
 				subscription.plan_name?.toLowerCase() === planName.toLowerCase()
 			);
 		}
+
+		if (subscription.plan_name === "free") return false;
 
 		return true;
 	};
