@@ -7,6 +7,7 @@ import { useState } from "react";
 import { toast } from "sonner";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
+import { useRouter } from "next/navigation";
 
 interface LoginFormProps {
 	onToggleMode: () => void;
@@ -17,32 +18,28 @@ const LoginForm = ({ onToggleMode }: LoginFormProps) => {
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
 	const [isLoading, setIsLoading] = useState(false);
+	const navigate = useRouter();
 
 	const handleLogin = async (e: React.FormEvent) => {
 		e.preventDefault();
-		debugger;
-		// setIsLoading(true);
+		setIsLoading(true);
+		try {
+			const { error } = await supabase.auth.signInWithPassword({
+				email,
+				password,
+			});
 
-		console.log(await supabase.auth.getUser());
-		toast.error("Hello", { duration: 50000 });
-		return;
-
-		// try {
-		// 	const { error } = await supabase.auth.signInWithPassword({
-		// 		email,
-		// 		password,
-		// 	});
-
-		// 	if (error) {
-		// 		toast.error(error.message);
-		// 	} else {
-		// 		toast.success("Successfully signed in!");
-		// 	}
-		// } catch (error) {
-		// 	toast.error("An unexpected error occurred");
-		// } finally {
-		// 	setIsLoading(false);
-		// }
+			if (error) {
+				toast.error(error.message);
+			} else {
+				toast.success("Successfully signed in!");
+				navigate.replace("/dashboard");
+			}
+		} catch (error) {
+			toast.error("An unexpected error occurred");
+		} finally {
+			setIsLoading(false);
+		}
 	};
 
 	return (

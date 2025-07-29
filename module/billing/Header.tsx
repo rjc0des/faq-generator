@@ -1,6 +1,6 @@
 "use client";
 
-import { getCheckoutURL } from "@/app/actions";
+import { getCheckoutURL } from "@/app/actions/actions";
 import { Button } from "@/components/ui/button";
 import { useSubscription } from "@/hooks/use-subscription";
 import { toast } from "@/hooks/use-toast";

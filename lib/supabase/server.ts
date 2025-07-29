@@ -4,6 +4,7 @@ import { Database } from "./types";
 
 export async function createClient() {
 	const cookieStore = await cookies();
+	console.log(cookieStore.getAll());
 
 	return createServerClient<Database>(
 		process.env.NEXT_PUBLIC_SUPABASE_URL!,

@@ -4,9 +4,29 @@ import React from "react";
 import { Button } from "../ui/button";
 import { Menu, Sparkles, X } from "lucide-react";
 import { useRouter } from "next/navigation";
+import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
+import { useProfile } from "@/hooks/use-profile";
+import { Skeleton } from "../ui/skeleton";
+import {
+	DropdownMenu,
+	DropdownMenuContent,
+	DropdownMenuItem,
+	DropdownMenuTrigger,
+} from "../ui/dropdown-menu";
+import { createClient } from "@/lib/supabase/client";
+import { toast } from "sonner";
 
 function Header() {
 	const navigate = useRouter();
+	const { isLoading, data: profile } = useProfile();
+	const supabase = createClient();
+
+	const handleLogout = async () => {
+		const { error } = await supabase.auth.signOut();
+		if (error) toast.error("Some problem with logout");
+		toast.success("Logout successful");
+	};
+
 	const [isMobileMenuOpen, setIsMobileMenuOpen] = React.useState(false);
 	return (
 		<nav className="border-b border-slate-700/50 bg-slate-900/50 backdrop-blur-sm fixed top-0 w-full z-50">
@@ -33,6 +53,7 @@ function Header() {
 						>
 							Testimonials
 						</a>
+
 						<Button
 							variant="ghost"
 							onClick={() => navigate.push("/pricing")}
@@ -40,19 +61,68 @@ function Header() {
 						>
 							Pricing
 						</Button>
-						<Button
-							variant="outline"
-							onClick={() => navigate.push("/auth")}
-							className="border-slate-600 text-slate-800 hover:bg-slate-800"
-						>
-							Sign In
-						</Button>
-						<Button
-							onClick={() => navigate.push("/generator")}
-							className="bg-lavender-600 hover:bg-lavender-700 text-white"
-						>
-							Try Free
-						</Button>
+						{isLoading ? (
+							<Skeleton className="w-12 h-5 rounded-sm" />
+						) : !profile || JSON.stringify(profile) === "{}" ? (
+							<>
+								<Button
+									variant="outline"
+									onClick={() => navigate.push("/auth")}
+									className="border-slate-600 text-slate-800 hover:bg-slate-800"
+								>
+									Sign In
+								</Button>
+								<Button
+									onClick={() => navigate.push("/generator")}
+									className="bg-lavender-600 hover:bg-lavender-700 text-white"
+								>
+									Try Free
+								</Button>
+							</>
+						) : (
+							<DropdownMenu>
+								<DropdownMenuTrigger asChild>
+									<Avatar>
+										<AvatarImage
+											src="/placeholder1.svg"
+											alt="Profile"
+										/>
+										<AvatarFallback className="bg-lavender-600 text-white text-sm uppercase">
+											{profile.name
+												.split(" ")
+												.map((n) => n[0])
+												.join("")}
+										</AvatarFallback>
+									</Avatar>
+								</DropdownMenuTrigger>
+								<DropdownMenuContent>
+									<DropdownMenuItem
+										className="cursor-pointer"
+										onClick={() =>
+											navigate.push("/dashboard")
+										}
+									>
+										Dashboard
+									</DropdownMenuItem>
+									<DropdownMenuItem
+										className="cursor-pointer"
+										onClick={() =>
+											navigate.push("/profile")
+										}
+									>
+										Profile
+									</DropdownMenuItem>
+									<DropdownMenuItem
+										className="cursor-pointer"
+										onClick={async () =>
+											await handleLogout()
+										}
+									>
+										Logout
+									</DropdownMenuItem>
+								</DropdownMenuContent>
+							</DropdownMenu>
+						)}
 					</div>
 
 					{/* Mobile menu button */}

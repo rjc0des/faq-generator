@@ -45,7 +45,13 @@ export async function updateSession(request: NextRequest) {
 		data: { user },
 	} = await supabase.auth.getUser();
 
-	const protectedRoutes = ["/dashboard", "/billing"];
+	const protectedRoutes = [
+		"/dashboard",
+		"/billing",
+		"/profile",
+		"/generator",
+		"/faq-management",
+	];
 
 	// ✅ Auth-only pages — redirect logged-in users away
 	const authOnlyRoutes = ["/auth"];

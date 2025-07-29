@@ -1,4 +1,4 @@
-import { getCheckoutURL } from "@/app/actions";
+import { getCheckoutURL } from "@/app/actions/actions";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";

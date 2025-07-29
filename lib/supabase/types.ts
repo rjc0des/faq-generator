@@ -227,7 +227,7 @@ export type Database = {
 			};
 		};
 		Enums: {
-			plan_name_enum: "monthly" | "free";
+			plan_name_enum: "pro plan" | "free plan";
 			subscription_status:
 				| "pending"
 				| "active"
@@ -367,7 +367,7 @@ export const Constants = {
 	},
 	public: {
 		Enums: {
-			plan_name_enum: ["monthly", "free"],
+			plan_name_enum: ["pro plan", "free plan"],
 			subscription_status: [
 				"pending",
 				"active",
